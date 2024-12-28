@@ -1,4 +1,4 @@
-import { useRouter } from "next/router";
+import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { AB_GET_ONE, AB_ITEM_PUT } from "@/config/api-path";
 import Layout1 from "@/components/layouts/layout1";
@@ -12,10 +12,9 @@ export default function ABEdit() {
     birthday: "",
     address: "",
   });
-  const router = useRouter();
+  const params = useParams();
   useEffect(() => {
-    if (!router.isReady) return;
-    const ab_id = +router.query.ab_id; // 轉換成數值
+    const ab_id = +parame.get('ab_id'); // 轉換成數值
     if (!ab_id) {
       router.push("/address-book"); // 回列表頁
     }
