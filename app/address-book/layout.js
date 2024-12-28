@@ -1,4 +1,3 @@
-import Head from "next/head";
 import Navbar from "@/components/layouts/navbar";
 
 export const metadata = {
