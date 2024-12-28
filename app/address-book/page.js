@@ -147,7 +147,7 @@ export default function ABListPage() {
                     <td>{v.name}</td>
                     <td>{v.email}</td>
                     <td>{v.mobile}</td>
-                    <td>{v.birthday}</td>
+                    <td>{v.birthday2}</td>
                     <td>{v.address}</td>
                     <td>
                       <Link href={"/address-book/" + v.ab_id}>
