@@ -1,13 +1,15 @@
+// app/address-book/page.js
 "use client";
 import { useEffect, useState } from "react";
 import { AB_LIST, AB_DEL_DELETE } from "@/config/api-path";
-import Layout1 from "@/components/layouts/layout1";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { FaRegTrashCan, FaRegPenToSquare } from "react-icons/fa6";
 
 export default function ABListPage() {
-  const router = useRouter();
+  // 取得 URL 中的 query string
+  const searchParams = useSearchParams();
+  // 存放載入進來的資料的狀態
   const [listData, setListData] = useState({
     totalPages: 0,
     totalRows: 0,
@@ -31,30 +33,28 @@ export default function ABListPage() {
   };
 
   useEffect(() => {
-    if (!router.isReady) return;
-    const controller = new AbortController();
+    const controller = new AbortController(); // 用來取消的控制器
     const signal = controller.signal;
     fetch(`${AB_LIST}${location.search}`, {
       signal,
     })
       .then((r) => r.json())
       .then((obj) => {
-        // console.log(obj);
+        console.log("obj: ", obj);
+        // api 回應的資料中，success 為 true 時，才更新 state
         if (obj.success) {
           setListData(obj);
         } else if (obj.redirect) {
           router.push(obj.redirect);
         }
       })
-      .catch((ex) => console.log(ex));
-    return () => {
-      controller.abort();
-    };
-  }, [router]);
+      .catch(console.warn); // 用戶取消時會發生 exception
+    return () => controller.abort(); // 取消未完成的 ajax
+  }, [searchParams]);
   console.log(listData); // render 時就會執行
 
   return (
-    <Layout1 title="通訊錄列表 - my site">
+    <>
       <div className="row">
         <div className="col">
           <nav aria-label="Page navigation example">
@@ -64,13 +64,10 @@ export default function ABListPage() {
                 .map((v, i) => {
                   let p = listData.page - 5 + i;
                   if (p < 1 || p > listData.totalPages) return null;
+                  const addActive =
+                    searchParams.get("page") == p ? "active" : "";
                   return (
-                    <li
-                      className={
-                        "page-item " + (router.query.page == p ? "active" : "")
-                      }
-                      key={p}
-                    >
+                    <li className={`page-item ${addActive}`} key={p}>
                       <Link className="page-link" href={`?page=${p}`}>
                         {p}
                       </Link>
@@ -131,6 +128,6 @@ export default function ABListPage() {
           </table>
         </div>
       </div>
-    </Layout1>
+    </>
   );
 }
