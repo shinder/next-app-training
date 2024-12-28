@@ -3,10 +3,12 @@
 import { useEffect, useState } from "react";
 import { AB_LIST, AB_DEL_DELETE } from "@/config/api-path";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { FaRegTrashCan, FaRegPenToSquare } from "react-icons/fa6";
 
 export default function ABListPage() {
+  const [refresh, setRefresh] = useState(false); // 為了刪除項目時觸發 re-render
+  const router = useRouter();
   // 取得 URL 中的 query string
   const searchParams = useSearchParams();
   // 存放載入進來的資料的狀態
@@ -17,19 +19,17 @@ export default function ABListPage() {
     rows: [],
   });
 
-  const delItem = (ab_id) => {
+  const delItem = async (ab_id) => {
     console.log({ ab_id });
-    fetch(`${AB_DEL_DELETE}/${ab_id}`, {
-      method: "DELETE",
-    })
-      .then((r) => r.json())
-      .then((data) => {
-        // alert(data.success);
-        if (data.success) {
-          // URL 和原本是一樣的, 目的是讓 router 去 update component
-          router.push(location.search, undefined, { scroll: false });
-        }
+    try {
+      const r = await fetch(`${AB_DEL_DELETE}/${ab_id}`, {
+        method: "DELETE",
       });
+      const result = await r.json();
+      if (result.success) {
+        setRefresh((v) => !v); // 變更狀態，重新載入資料
+      }
+    } catch (ex) {}
   };
 
   useEffect(() => {
@@ -50,7 +50,7 @@ export default function ABListPage() {
       })
       .catch(console.warn); // 用戶取消時會發生 exception
     return () => controller.abort(); // 取消未完成的 ajax
-  }, [searchParams]);
+  }, [searchParams, refresh]);
   console.log(listData); // render 時就會執行
 
   return (
@@ -103,8 +103,8 @@ export default function ABListPage() {
                       <a
                         href="#"
                         onClick={(e) => {
-                          e.preventDefault();
-                          delItem(v.ab_id);
+                          e.preventDefault(); // 避免刷新頁面
+                          delItem(v.ab_id); // 呼叫刪除項目的函式
                         }}
                       >
                         <FaRegTrashCan />

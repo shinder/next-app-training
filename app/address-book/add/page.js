@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Layout1 from "@/components/layouts/layout1";
 import { AB_ADD_POST } from "@/config/api-path";
 
-export default function ABAdd() {
+export default function ABAddPage() {
   const [myForm, setMyForm] = useState({
     name: "",
     email: "",
