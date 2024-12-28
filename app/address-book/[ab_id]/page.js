@@ -1,9 +1,9 @@
-import { useParams } from "next/navigation";
+"use client";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { AB_GET_ONE, AB_ITEM_PUT } from "@/config/api-path";
-import Layout1 from "@/components/layouts/layout1";
 
-export default function ABEdit() {
+export default function ABEditPage() {
   const [myForm, setMyForm] = useState({
     ab_id: 0,
     name: "",
@@ -13,8 +13,10 @@ export default function ABEdit() {
     address: "",
   });
   const params = useParams();
+  const router = useRouter();
   useEffect(() => {
-    const ab_id = +parame.get('ab_id'); // 轉換成數值
+    // 讀取欲編輯的資料項目
+    const ab_id = +params.ab_id;
     if (!ab_id) {
       router.push("/address-book"); // 回列表頁
     }
@@ -28,7 +30,7 @@ export default function ABEdit() {
           router.push("/address-book"); // 回列表頁
         }
       });
-  }, [router]);
+  }, [params.ab_id, router]);
 
   const onChange = (e) => {
     const t = e.currentTarget;
@@ -43,7 +45,7 @@ export default function ABEdit() {
 
     // TODO: 欄位檢查
 
-    fetch(`${AB_ITEM_PUT}/${router.query.ab_id}`, {
+    fetch(`${AB_ITEM_PUT}/${params.ab_id}`, {
       method: "PUT",
       body: JSON.stringify(myForm),
       headers: {
@@ -55,11 +57,13 @@ export default function ABEdit() {
         if (obj.success) {
           alert("修改成功");
           router.back();
+        } else {
+          alert("資料沒有修改");
         }
       });
   };
   return (
-    <Layout1>
+    <>
       <div className="row">
         <div className="col-6">
           <div className="card">
@@ -67,12 +71,13 @@ export default function ABEdit() {
               <h5 className="card-title">編輯通訊錄</h5>
               <form name="form1" onSubmit={onSubmit}>
                 <div className="mb-3">
-                  <label htmlFor="name" className="form-label">
+                  <label htmlFor="ab_id" className="form-label">
                     編號
                   </label>
                   <input
                     type="text"
                     className="form-control"
+                    id="ab_id"
                     value={myForm.ab_id}
                     disabled
                   />
@@ -156,6 +161,6 @@ export default function ABEdit() {
           </div>
         </div>
       </div>
-    </Layout1>
+    </>
   );
 }
