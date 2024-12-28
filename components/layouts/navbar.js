@@ -1,8 +1,16 @@
 "use client";
 import Link from "next/link";
 import { useAuth } from "@/contexts/auth-context";
+import { usePathname } from "next/navigation";
+const selectedStyle = {
+  color: "white",
+  fontWeight: "900",
+  borderRadius: "5px",
+  backgroundColor: "#0070f3",
+};
 export default function Navbar() {
   const { auth, logout } = useAuth();
+  const pathname = usePathname();
   return (
     <div className="container">
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -47,11 +55,11 @@ export default function Navbar() {
               {auth.id ? (
                 <>
                   <li className="nav-item">
-                    <a className="nav-link ">{auth.nickname}</a>
+                    <a className="nav-link">{auth.nickname}</a>
                   </li>
                   <li className="nav-item">
                     <a
-                      className="nav-link "
+                      className="nav-link"
                       href="#"
                       onClick={(e) => {
                         e.preventDefault();
@@ -66,9 +74,13 @@ export default function Navbar() {
                 <>
                   <li className="nav-item">
                     <Link
-                      className="nav-link active"
-                      aria-current="page"
-                      href="/quick-login"
+                      className="nav-link"
+                      style={
+                        pathname === "/address-book/quick-login"
+                          ? selectedStyle
+                          : {}
+                      }
+                      href="/address-book/quick-login"
                     >
                       快速登入
                     </Link>
@@ -76,7 +88,6 @@ export default function Navbar() {
                   <li className="nav-item">
                     <Link
                       className="nav-link active"
-                      aria-current="page"
                       href="/register"
                     >
                       註冊

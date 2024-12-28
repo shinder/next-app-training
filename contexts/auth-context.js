@@ -1,16 +1,16 @@
+// contexts/auth-context.js
 "use client";
 import { createContext, useContext, useState, useEffect } from "react";
 import { JWT_LOGIN_POST } from "@/config/api-path";
 
 const AuthContext = createContext();
-
 /*
 1. 登入
 2. 登出
 3. 取得登入者的資料
 4. 取得已登入者的 token (或直接拿到 Authorization headers)
-
 */
+// 預設的狀態, 沒有登入
 const emptyAuth = {
   id: 0,
   email: "",
@@ -39,6 +39,7 @@ export function AuthContextProvider({ children }) {
       });
       const result = await r.json();
       if (result.success) {
+        // 把取得的用戶資料和 token 記錄在 localStorage
         localStorage.setItem(storageKey, JSON.stringify(result.data));
         setAuth(result.data);
         return true;

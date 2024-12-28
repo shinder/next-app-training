@@ -1,8 +1,10 @@
+"use client";
 import React, { useState } from "react";
-import Layout1 from "@/components/layouts/layout1";
 import { AB_ADD_POST } from "@/config/api-path";
+import { useRouter } from "next/navigation";
 
 export default function ABAddPage() {
+  const router = useRouter();
   const [myForm, setMyForm] = useState({
     name: "",
     email: "",
@@ -35,11 +37,12 @@ export default function ABAddPage() {
       .then((obj) => {
         if (obj.success) {
           alert("新增成功");
+          router.push(`/address-book`); // 跳頁
         }
       });
   };
   return (
-    <Layout1>
+    <>
       <div className="row">
         <div className="col-6">
           <div className="card">
@@ -124,6 +127,6 @@ export default function ABAddPage() {
           </div>
         </div>
       </div>
-    </Layout1>
+    </>
   );
 }
