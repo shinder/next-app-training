@@ -79,7 +79,7 @@ export default function ABList() {
       .catch(console.warn); // 用戶取消時會發生 exception
     return () => controller.abort(); // 取消未完成的 ajax
   }, [searchParams, refresh, getAuthHeader, router]);
-  console.log(listData); // render 時就會執行
+  console.log('ABList:', listData); // render 時就會執行
 
   return (
     <>
