@@ -2,7 +2,6 @@
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { AB_GET_ONE, AB_ITEM_PUT } from "@/config/api-path";
-import useSWR from "swr";
 
 export default function ABEditPage() {
   const [myForm, setMyForm] = useState({
@@ -14,24 +13,24 @@ export default function ABEditPage() {
     address: "",
   });
   const params = useParams();
-
   const router = useRouter();
-  const fetcher = (url) => fetch(url).then((r) => r.json());
-  const { data, isLoading, error, mutate } = useSWR(
-    `${AB_GET_ONE}/${params.ab_id}`,
-    fetcher
-  );
   useEffect(() => {
-    if(myForm.ab_id !== 0) return;
-    if (data) {
-      if (data.success) {
-        delete data.data.created_at; // 去掉屬性
-        setMyForm(data.data);
-      } else {
-        router.push("/address-book"); // 回列表頁
-      }
+    // 讀取欲編輯的資料項目
+    const ab_id = +params.ab_id;
+    if (!ab_id) {
+      router.push("/address-book"); // 回列表頁
     }
-  }, [data, router, myForm.ab_id]);
+    fetch(`${AB_GET_ONE}/${ab_id}`)
+      .then((r) => r.json())
+      .then((obj) => {
+        if (obj.success) {
+          delete obj.data.created_at; // 去掉屬性
+          setMyForm(obj.data);
+        } else {
+          router.push("/address-book"); // 回列表頁
+        }
+      });
+  }, [params.ab_id, router]);
 
   const onChange = (e) => {
     const t = e.currentTarget;
@@ -63,10 +62,6 @@ export default function ABEditPage() {
         }
       });
   };
-  console.log('edit page', myForm);
-  
-  if (isLoading) return <div>loading...</div>;
-  if (error) return <div>error</div>;
   return (
     <>
       <div className="row">
