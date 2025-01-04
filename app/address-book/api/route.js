@@ -6,7 +6,6 @@ const fmDate = "YYYY-MM-DD";
 
 /* ******* 取得列表資料的函式 ******* */
 const getListData = async (req) => {
-
   let page = 1; // 預設值
   const query = getQueryFromRequest(req);
   if (query.page && +query.page > 0) {
@@ -31,9 +30,7 @@ const getListData = async (req) => {
   }
 
   // 生日的篩選
-  const birth_begin = query.birth_begin
-    ? moment(query.birth_begin)
-    : null;
+  const birth_begin = query.birth_begin ? moment(query.birth_begin) : null;
   const birth_end = query.birth_end ? moment(query.birth_end) : null;
 
   if (birth_begin && birth_begin.isValid()) {
@@ -77,5 +74,6 @@ export const GET = async (request, { params }) => {
   // console.log("---", request.constructor.name, "---"); // NextRequest
   // console.log(request);
   const obj = await getListData(request);
-  return new Response(JSON.stringify(obj));
+  const success = !obj.redirect;
+  return new Response(JSON.stringify({ ...obj, success }));
 };

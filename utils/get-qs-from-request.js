@@ -11,6 +11,7 @@ export function getSearchParamsFromRequest(req) {
 export function getQueryFromRequest(req) {
   const searchParams = getSearchParamsFromRequest(req);
   const query = {};
+  if (!searchParams) return query;
   for (let [k, v] of searchParams.entries()) {
     query[k] = v;
   }
