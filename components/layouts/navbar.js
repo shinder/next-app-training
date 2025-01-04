@@ -11,6 +11,12 @@ const selectedStyle = {
 export default function Navbar() {
   const { auth, logout } = useAuth();
   const pathname = usePathname();
+
+  const leftItems = [
+    { title: "通訊錄列表", href: "/address-book" },
+    { title: "新增通訊錄", href: "/address-book/add" },
+  ];
+
   return (
     <div className="container">
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -31,24 +37,18 @@ export default function Navbar() {
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-              <li className="nav-item">
-                <Link
-                  className="nav-link active"
-                  aria-current="page"
-                  href="/address-book"
-                >
-                  通訊錄列表
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link active"
-                  aria-current="page"
-                  href="/address-book/add"
-                >
-                  新增通訊錄
-                </Link>
-              </li>
+              {leftItems.map((item) => {
+                return <li className="nav-item" key={item.href}>
+                  <Link
+                    className="nav-link"
+                    aria-current="page"
+                    href={item.href}
+                    style={pathname === item.href ? selectedStyle : {}}
+                  >
+                    {item.title}
+                  </Link>
+                </li>;
+              })}
             </ul>
 
             <ul className="navbar-nav  mb-2 mb-lg-0">
@@ -86,10 +86,7 @@ export default function Navbar() {
                     </Link>
                   </li>
                   <li className="nav-item">
-                    <Link
-                      className="nav-link active"
-                      href="/register"
-                    >
+                    <Link className="nav-link" href="#">
                       註冊
                     </Link>
                   </li>
