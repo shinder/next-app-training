@@ -19,10 +19,11 @@ export default function ABEditPage() {
   const fetcher = (url) => fetch(url).then((r) => r.json());
   const { data, isLoading, error, mutate } = useSWR(
     `${AB_GET_ONE}/${params.ab_id}`,
-    fetcher
+    fetcher,
+    { use: [] } // 避免全域快取
   );
   useEffect(() => {
-    if(myForm.ab_id !== 0) return;
+    if (myForm.ab_id !== 0) return;
     if (data) {
       if (data.success) {
         delete data.data.created_at; // 去掉屬性
@@ -63,8 +64,8 @@ export default function ABEditPage() {
         }
       });
   };
-  console.log('edit page', myForm);
-  
+  console.log("edit page", myForm);
+
   if (isLoading) return <div>loading...</div>;
   if (error) return <div>error</div>;
   return (
