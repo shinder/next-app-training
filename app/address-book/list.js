@@ -79,7 +79,7 @@ export default function ABList() {
       .catch(console.warn); // 用戶取消時會發生 exception
     return () => controller.abort(); // 取消未完成的 ajax
   }, [searchParams, refresh, getAuthHeader, router]);
-  console.log('ABList:', listData); // render 時就會執行
+  console.log("ABList:", listData); // render 時就會執行
 
   return (
     <>
@@ -92,8 +92,7 @@ export default function ABList() {
                 .map((v, i) => {
                   let p = listData.page - 5 + i;
                   if (p < 1 || p > listData.totalPages) return null;
-                  const addActive =
-                    searchParams.get("page") == p ? "active" : "";
+                  const addActive = listData.page == p ? "active" : "";
                   return (
                     <li className={`page-item ${addActive}`} key={p}>
                       <Link className="page-link" href={`?page=${p}`}>
