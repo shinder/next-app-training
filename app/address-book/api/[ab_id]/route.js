@@ -5,7 +5,7 @@ import moment from "moment";
 import {getJsonBody} from "@/utils/my-parsers";
 import { mySchema } from "@/utils/my-schemas";
 
-// *** 取得列表資料
+// *** 取得資料
 export const GET = async (request, { params }) => {
   const output = { success: false, data: null, error: "" };
 
@@ -26,7 +26,7 @@ export const GET = async (request, { params }) => {
   return responseJson(output);
 };
 
-// *** 取得列表資料
+// *** 修改資料
 export const PUT = async (request, { params }) => {
   const body = await getJsonBody(request);
   const output = {
@@ -61,5 +61,23 @@ export const PUT = async (request, { params }) => {
     output.ex = ex;
   }
 
+  return responseJson(output);
+};
+
+export const DELETE = async (request, { params }) => {
+  const output = {
+    success: false,
+    result: {},
+    params
+  };
+
+  const sql = "DELETE FROM `address_book` WHERE ab_id=? ";
+  try {
+    const [result] = await db.query(sql, [params.ab_id]);
+    output.result = result;
+    output.success = !!result.affectedRows;
+  } catch (ex) {
+    output.ex = ex;
+  }
   return responseJson(output);
 };
