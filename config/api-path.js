@@ -22,7 +22,8 @@ export const AB_GET_ONE = `/address-book/api`;
 // export const AB_ITEM_PUT = `${API_SERVER}/address-book/api`;
 export const AB_ITEM_PUT = `/address-book/api`;
 
-export const JWT_LOGIN_POST = `${API_SERVER}/login-jwt`;
+// export const JWT_LOGIN_POST = `${API_SERVER}/login-jwt`;
+export const JWT_LOGIN_POST = `/login-jwt`;
 
 // 切換加到最愛
 //  `${API_SERVER}/address-book/api/toggle-like/${ab_id}`

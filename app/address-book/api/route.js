@@ -1,6 +1,6 @@
 import moment from "moment";
 import db from "@/utils/connect-mysql";
-import { getQueryStringObject, getBody } from "@/utils/my-parsers";
+import { getQueryStringObject, getBody, getJwtData } from "@/utils/my-parsers";
 import { responseJson } from "@/utils/my-responses";
 import { fmDate, mySchema } from "@/utils/my-schemas";
 
@@ -16,8 +16,8 @@ const getListData = async (req) => {
   }
 
   const perPage = 25; // 每頁最多有幾筆
-
-  const member_id = req.my_jwt?.id || 0; // 授權的用戶
+  const jwtData = getJwtData(req);
+  const member_id = jwtData?.id || 0; // 授權的用戶
   console.log("授權的用戶: ", member_id, new Date());
 
   let where = " WHERE 1 "; // SQL 條件的開頭

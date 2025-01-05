@@ -1,11 +1,11 @@
 import qs from "qs";
+import jwt from "jsonwebtoken";
 
 // *** 將 request 的 query string 轉換成物件 ***
 export function getQueryStringObject(request) {
   const searchParams = request.nextUrl.searchParams;
   return qs.parse(searchParams.toString());
 }
-
 
 
 // *** 將 JSON Body 轉換成物件 ***
@@ -41,4 +41,20 @@ export async function getBody(request) {
     }
   }
   return null;
+}
+
+// **************** 解密 JWT 取得資料 ****************
+export function getJwtData(request) {
+  let result = null;
+  let auth = request.headers.get("Authorization");
+
+  if (auth && auth.indexOf("Bearer ") === 0) {
+    const token = auth.slice(7);
+    try {
+      result = jwt.verify(token, process.env.JWT_KEY);
+    } catch (ex) {
+      console.log(ex);
+    }
+  }
+  return result;
 }
