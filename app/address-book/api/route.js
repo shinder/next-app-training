@@ -1,13 +1,26 @@
 import db from "@/utils/connect-mysql";
-import { getQueryFromRequest } from "@/utils/get-qs-from-request";
+import { getQueryStringObject, getFormBody, getJsonBody } from "@/utils/my-parsers";
 import moment from "moment";
+import { z } from "zod";
 
 const fmDate = "YYYY-MM-DD";
+
+const mySchema = z.object({
+  name: z
+    .string({ message: "姓名欄為必填" })
+    .min(3, { message: "長度要三個字以上" }),
+  email: z.string().email({ message: "請填寫正確的電郵格式" }),
+  birthday: z
+    .string()
+    .date("生日的日期格式為: YYYY-MM-DD")
+    .optional() // 選擇性的欄位
+    .or(z.literal("")), // 值可以是空字串
+});
 
 /* ******* 取得列表資料的函式 ******* */
 const getListData = async (req) => {
   let page = 1; // 預設值
-  const query = getQueryFromRequest(req);
+  const query = getQueryStringObject(req);
   if (query.page && +query.page > 0) {
     page = +query.page;
   }
@@ -76,4 +89,39 @@ export const GET = async (request, { params }) => {
   const obj = await getListData(request);
   const success = !obj.redirect;
   return new Response(JSON.stringify({ ...obj, success }));
+};
+
+export const POST = async (request, { params }) => {
+    const body = await getJsonBody(request);
+    const output = {
+      success: false,
+      bodyData: body,
+      errors: [],
+      result: undefined,
+    };
+    const { name, email, mobile, birthday, address } = body;
+    const data = { name, email, mobile, birthday, address };
+  
+    const checkResult = mySchema.safeParse(data);
+    if (!checkResult.success) {
+      // 沒有通過資料檢查
+      output.errors = checkResult.error.issues;
+      return new Response(JSON.stringify(output));
+    }
+  
+    // 處理生日沒有填寫的情況
+    const m = moment(data.birthday);
+    if (!m.isValid()) {
+      data.birthday = null;
+    }
+  
+    const sql = "INSERT INTO `address_book` SET ?";
+    try {
+      const [result] = await db.query(sql, [data]);
+      output.result = result;
+      output.success = !!result.affectedRows;
+    } catch (ex) {
+      output.ex = ex;
+    }
+    return new Response(JSON.stringify(output));
 };
