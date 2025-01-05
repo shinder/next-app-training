@@ -1,4 +1,3 @@
-
 import { z } from "zod";
 
 export const fmDate = "YYYY-MM-DD"; // 日期的格式
@@ -14,3 +13,9 @@ export const mySchema = z.object({
     .optional() // 選擇性的欄位
     .or(z.literal("")), // 值可以是空字串
 });
+
+export const imgTypesMapping = {
+  "image/jpeg": ".jpg",
+  "image/png": ".png",
+  "image/webp": ".webp",
+};
