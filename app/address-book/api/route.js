@@ -1,21 +1,8 @@
 import db from "@/utils/connect-mysql";
-import { getQueryStringObject, getFormBody, getJsonBody } from "@/utils/my-parsers";
+import { getQueryStringObject, getJsonBody } from "@/utils/my-parsers";
+import { responseJson } from "@/utils/my-responses";
 import moment from "moment";
-import { z } from "zod";
-
-const fmDate = "YYYY-MM-DD";
-
-const mySchema = z.object({
-  name: z
-    .string({ message: "姓名欄為必填" })
-    .min(3, { message: "長度要三個字以上" }),
-  email: z.string().email({ message: "請填寫正確的電郵格式" }),
-  birthday: z
-    .string()
-    .date("生日的日期格式為: YYYY-MM-DD")
-    .optional() // 選擇性的欄位
-    .or(z.literal("")), // 值可以是空字串
-});
+import { fmDate, mySchema } from "@/utils/my-schemas";
 
 /* ******* 取得列表資料的函式 ******* */
 const getListData = async (req) => {
@@ -88,7 +75,7 @@ export const GET = async (request, { params }) => {
   // console.log(request);
   const obj = await getListData(request);
   const success = !obj.redirect;
-  return new Response(JSON.stringify({ ...obj, success }));
+  return responseJson({ ...obj, success });
 };
 
 export const POST = async (request, { params }) => {
@@ -123,5 +110,5 @@ export const POST = async (request, { params }) => {
     } catch (ex) {
       output.ex = ex;
     }
-    return new Response(JSON.stringify(output));
+    return responseJson(output);
 };

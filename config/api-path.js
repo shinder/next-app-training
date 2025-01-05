@@ -13,11 +13,13 @@ export const AB_ADD_POST = `/address-book/api`;
 export const AB_DEL_DELETE = `${API_SERVER}/address-book/api`;
 
 // 讀取單筆 /address-book/api/:ab_id
-export const AB_GET_ONE = `${API_SERVER}/address-book/api`;
+// export const AB_GET_ONE = `${API_SERVER}/address-book/api`;
+export const AB_GET_ONE = `/address-book/api`;
 
 // 修改單筆通訊錄項目 method: PUT
 // `${API_SERVER}/address-book/api/${ab_id}`
-export const AB_ITEM_PUT = `${API_SERVER}/address-book/api`;
+// export const AB_ITEM_PUT = `${API_SERVER}/address-book/api`;
+export const AB_ITEM_PUT = `/address-book/api`;
 
 export const JWT_LOGIN_POST = `${API_SERVER}/login-jwt`;
 
