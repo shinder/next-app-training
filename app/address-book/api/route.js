@@ -1,7 +1,7 @@
-import db from "@/utils/connect-mysql";
-import { getQueryStringObject, getJsonBody } from "@/utils/my-parsers";
-import { responseJson } from "@/utils/my-responses";
 import moment from "moment";
+import db from "@/utils/connect-mysql";
+import { getQueryStringObject, getBody } from "@/utils/my-parsers";
+import { responseJson } from "@/utils/my-responses";
 import { fmDate, mySchema } from "@/utils/my-schemas";
 
 /* ******* 取得列表資料的函式 ******* */
@@ -79,36 +79,36 @@ export const GET = async (request, { params }) => {
 };
 
 export const POST = async (request, { params }) => {
-    const body = await getJsonBody(request);
-    const output = {
-      success: false,
-      bodyData: body,
-      errors: [],
-      result: undefined,
-    };
-    const { name, email, mobile, birthday, address } = body;
-    const data = { name, email, mobile, birthday, address };
-  
-    const checkResult = mySchema.safeParse(data);
-    if (!checkResult.success) {
-      // 沒有通過資料檢查
-      output.errors = checkResult.error.issues;
-      return new Response(JSON.stringify(output));
-    }
-  
-    // 處理生日沒有填寫的情況
-    const m = moment(data.birthday);
-    if (!m.isValid()) {
-      data.birthday = null;
-    }
-  
-    const sql = "INSERT INTO `address_book` SET ?";
-    try {
-      const [result] = await db.query(sql, [data]);
-      output.result = result;
-      output.success = !!result.affectedRows;
-    } catch (ex) {
-      output.ex = ex;
-    }
-    return responseJson(output);
+  const body = await getBody(request);
+  const output = {
+    success: false,
+    bodyData: body,
+    errors: [],
+    result: undefined,
+  };
+  const { name, email, mobile, birthday, address } = body;
+  const data = { name, email, mobile, birthday, address };
+
+  const checkResult = mySchema.safeParse(data);
+  if (!checkResult.success) {
+    // 沒有通過資料檢查
+    output.errors = checkResult.error.issues;
+    return new Response(JSON.stringify(output));
+  }
+
+  // 處理生日沒有填寫的情況
+  const m = moment(data.birthday);
+  if (!m.isValid()) {
+    data.birthday = null;
+  }
+
+  const sql = "INSERT INTO `address_book` SET ?";
+  try {
+    const [result] = await db.query(sql, [data]);
+    output.result = result;
+    output.success = !!result.affectedRows;
+  } catch (ex) {
+    output.ex = ex;
+  }
+  return responseJson(output);
 };

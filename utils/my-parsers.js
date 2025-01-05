@@ -5,6 +5,9 @@ export function getQueryStringObject(request) {
   const searchParams = request.nextUrl.searchParams;
   return qs.parse(searchParams.toString());
 }
+
+
+
 // *** 將 JSON Body 轉換成物件 ***
 export async function getJsonBody(request) {
   const body = await request.json();
@@ -24,13 +27,18 @@ export async function getFormBody(request) {
   return qs.parse(usp.toString());
 }
 
-//
+// **************** 取得主體內容物件 ****************
+export async function getBody(request) {
+  const cType = request.headers.get("Content-Type");
 
-export function responseJson(data) {
-  const response = new Response(JSON.stringify(data), {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-  return response;
+  if (cType) {
+    if (cType.indexOf("application/json") >= 0) {
+      return await getJsonBody(request);
+    } else if (cType.indexOf("application/x-www-form-urlencoded") >= 0) {
+      return await getUrlencodedBody(request);
+    } else if (cType.indexOf("multipart/form-data") >= 0) {
+      return await getFormBody(request);
+    }
+  }
+  return null;
 }

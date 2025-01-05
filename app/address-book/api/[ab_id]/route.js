@@ -1,17 +1,18 @@
 import db from "@/utils/connect-mysql";
-import { responseJson } from "@/utils/my-parsers";
-import { fmDate } from "@/utils/my-schemas";
+import { responseJson } from "@/utils/my-responses";
+import { fmDate, mySchema } from "@/utils/my-schemas";
 import moment from "moment";
-import {getJsonBody} from "@/utils/my-parsers";
-import { mySchema } from "@/utils/my-schemas";
+import { getBody } from "@/utils/my-parsers";
 
 // *** 取得資料
 export const GET = async (request, { params }) => {
   const output = { success: false, data: null, error: "" };
-
   const ab_id = +params.ab_id;
-  output.error = "不正確的 ab_id";
-  if (!ab_id) return responseJson(output); // 沒 ab_id 就離開
+
+  if (!ab_id) {
+    output.error = "不正確的 ab_id";
+    return responseJson(output); // 沒 ab_id 就離開
+  }
 
   const sql = `SELECT * FROM address_book WHERE ab_id=${ab_id}`;
   const [rows] = await db.query(sql);
@@ -28,7 +29,7 @@ export const GET = async (request, { params }) => {
 
 // *** 修改資料
 export const PUT = async (request, { params }) => {
-  const body = await getJsonBody(request);
+  const body = await getBody(request);
   const output = {
     success: false,
     bodyData: body,
@@ -68,7 +69,7 @@ export const DELETE = async (request, { params }) => {
   const output = {
     success: false,
     result: {},
-    params
+    params,
   };
 
   const sql = "DELETE FROM `address_book` WHERE ab_id=? ";
