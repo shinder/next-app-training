@@ -13,11 +13,11 @@ export default function Cleanup() {
       <div>
         <button onClick={() => setShowChild(!showChild)}>show or hide</button>
       </div>
-      {/* {showChild && <CleanupChild1 />} */}
+      {showChild && <CleanupChild1 />}
       <hr />
       {/* {showChild && <CleanupChild2 />} */}
       <hr />
-      {showChild && <CleanupChild3 />}
+      {/* {showChild && <CleanupChild3 />} */}
     </div>
   );
 }
