@@ -1,5 +1,5 @@
-// ****** Node 20.12 可以正常運作
-// ****** Node 22.12, 20.18 會出錯
+// ****** 使用 Postman 測試上傳檔案會出錯 (Node 20.12 可以正常運作) (Node 22.12, 20.18 會出錯)
+
 import { NextResponse } from "next/server";
 import fs from "node:fs/promises";
 import { imgTypesMapping } from "@/utils/my-schemas";

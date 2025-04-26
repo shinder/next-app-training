@@ -5,6 +5,7 @@
 
 package-lock.json
 pnpm-lock.yaml
+public/uploads
 
 # dependencies
 /node_modules

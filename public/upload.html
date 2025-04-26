@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form name="form1">
+      <input type="file" name="avatar" accept="image/*" multiple />
+    </form>
+    <div class="container" style="display: flex;"></div>
+
+    <script>
+      const avatarField = document.form1.avatar;
+      const cont = document.querySelector(".container");
+
+      const cardFn = (filename) => {
+        return `
+          <div class="card" style="width: 30rem;">
+            <img src="/uploads/${filename}" width="100%" alt="...">
+          </div>
+        `;
+      };
+
+      avatarField.addEventListener("change", async (e) => {
+        // 沒有選擇任何檔案, 就直接返回
+        if (!avatarField.files.length) return;
+
+        const fd = new FormData(document.form1);
+        const r = await fetch(`/upload-avatar`, {
+          method: "POST",
+          body: fd,
+        });
+        if (!r.ok) {
+          console.warn(`上傳發生錯誤`);
+          return;
+        }
+        const result = await r.json();
+        console.log(result);
+        if(result.success) {
+          console.log("上傳成功");
+          cont.innerHTML = cardFn(result.file);
+        } else {
+          console.warn("上傳失敗");
+        }
+      });
+    </script>
+  </body>
+</html>
