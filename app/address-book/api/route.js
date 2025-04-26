@@ -93,7 +93,7 @@ export const POST = async (request, { params }) => {
   if (!checkResult.success) {
     // 沒有通過資料檢查
     output.errors = checkResult.error.issues;
-    return new Response(JSON.stringify(output));
+    return NextResponse.json(output);
   }
 
   // 處理生日沒有填寫的情況

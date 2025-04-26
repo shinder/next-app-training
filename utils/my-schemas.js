@@ -5,7 +5,7 @@ export const fmDate = "YYYY-MM-DD"; // 日期的格式
 export const mySchema = z.object({
   name: z
     .string({ message: "姓名欄為必填" })
-    .min(3, { message: "長度要三個字以上" }),
+    .min(2, { message: "長度要兩個字以上" }),
   email: z.string().email({ message: "請填寫正確的電郵格式" }),
   birthday: z
     .string()

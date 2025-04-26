@@ -1,0 +1,8 @@
+.errorFieldGroup {
+  input {
+    border: 2px solid red;
+  }
+  div {
+    color: red;
+  }
+}
