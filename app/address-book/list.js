@@ -154,8 +154,6 @@ export default function ABList() {
                       </Link>
                     </td>
                     <td>
-                      {/* 顯示 like_id 測試 */}
-                      {v.like_id} {` `}
                       <a
                         href="#"
                         onClick={(e) => {

@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 4.9.11
 -- https://www.phpmyadmin.net/
 --
--- 主機： localhost
--- 產生時間： 2025 年 01 月 05 日 16:02
--- 伺服器版本： 10.1.38-MariaDB
--- PHP 版本： 5.6.40
+-- 主機： 127.0.0.1
+-- 產生時間： 2025 年 04 月 26 日 23:08
+-- 伺服器版本： 10.6.21-MariaDB-0ubuntu0.22.04.2
+-- PHP 版本： 5.6.40-81+ubuntu22.04.1+deb.sury.org+1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -32,8 +32,8 @@ CREATE TABLE `ab_likes` (
   `like_id` int(11) NOT NULL,
   `member_id` int(11) NOT NULL,
   `ab_id` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `created_at` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- 傾印資料表的資料 `ab_likes`
@@ -53,7 +53,8 @@ INSERT INTO `ab_likes` (`like_id`, `member_id`, `ab_id`, `created_at`) VALUES
 (19, 7, 912, '2024-12-28 22:19:20'),
 (20, 7, 961, '2024-12-28 22:24:33'),
 (23, 3, 997, '2025-01-05 15:24:28'),
-(24, 7, 982, '2025-01-05 16:00:54');
+(24, 7, 982, '2025-01-05 16:00:54'),
+(27, 7, 853, '2025-04-26 23:06:48');
 
 -- --------------------------------------------------------
 
@@ -68,8 +69,8 @@ CREATE TABLE `address_book` (
   `mobile` varchar(255) NOT NULL,
   `birthday` date DEFAULT NULL,
   `address` varchar(255) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `created_at` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- 傾印資料表的資料 `address_book`
@@ -836,9 +837,7 @@ INSERT INTO `address_book` (`ab_id`, `name`, `email`, `mobile`, `birthday`, `add
 (781, '王怡婷', 'mail93585@test.com', '0918808312', '1987-01-26', '臺南市', '2024-07-08 09:52:02'),
 (782, '陳家豪', 'mail49966@test.com', '0918244187', '1991-12-02', '彰化縣', '2024-07-08 09:52:02'),
 (783, '趙鈺婷', 'mail21368@test.com', '0918406905', '1985-03-26', '新北市', '2024-07-08 09:52:02'),
-(784, '徐家瑋', 'mail15119@test.com', '0918144637', '1991-01-25', '臺中市', '2024-07-08 09:52:02'),
 (785, '羅冠宇', 'mail10825@test.com', '0918804113', '1995-01-03', '基隆市', '2024-07-08 09:52:02'),
-(787, '韓承翰', 'mail35353@test.com', '0918285113', '1985-02-26', '連江縣', '2024-07-08 09:52:02'),
 (788, '馬冠霖', 'mail93202@test.com', '0918263471', '1990-08-14', '臺北市', '2024-07-08 09:52:02'),
 (789, '朱家豪', 'mail29997@test.com', '0918721294', '1995-05-28', '臺東縣', '2024-07-08 09:52:02'),
 (790, '徐柏翰', 'mail96544@test.com', '0918998842', '1992-04-29', '新竹市', '2024-07-08 09:52:02'),
@@ -1009,17 +1008,15 @@ INSERT INTO `address_book` (`ab_id`, `name`, `email`, `mobile`, `birthday`, `add
 (981, '馮冠霖', 'mail78129@test.com', '0918695672', '1988-08-13', '新竹縣', '2024-07-08 09:52:02'),
 (982, '彭彥廷', 'mail39081@test.com', '0918671017', '1999-06-13', '新北市', '2024-07-08 09:52:02'),
 (983, '郭鈺婷', 'mail30312@test.com', '0918173273', '1985-03-09', '屏東縣', '2024-07-08 09:52:02'),
-(984, '高鈺婷', 'mail21918@test.com', '0918653226', '1995-05-13', '花蓮縣', '2024-07-08 09:52:02'),
 (986, '王佳穎', 'mail31022@test.com', '0918127085', '1985-03-07', '桃園市', '2024-07-08 09:52:02'),
 (988, '曾冠宇', 'mail34137@test.com', '0918958053', '1986-01-19', '臺北市', '2024-07-08 09:52:02'),
 (989, '楊鈺婷', 'mail86062@test.com', '0918639009', '1997-05-25', '臺中市', '2024-07-08 09:52:02'),
 (990, '李冠廷', 'mail77546@test.com', '0918420589', '1987-08-14', '高雄市', '2024-07-08 09:52:02'),
 (992, '董冠廷', 'mail53141@test.com', '0918118134', '1988-12-30', '苗栗縣', '2024-07-08 09:52:02'),
-(994, '趙彥廷', 'mail93104@test.com', '0918924549', '1995-05-13', '高雄市', '2024-07-08 09:52:02'),
+(994, '趙一山', 'mail93104@test.co', '0918924549', '1995-05-13', '高雄市', '2024-07-08 09:52:02'),
 (995, '鄧冠霖', 'mail34666@test.com', '0918343987', '1994-06-10', '金門縣', '2024-07-08 09:52:02'),
 (997, '張宗翰', 'mail44472@test.com', '0918274384', '1986-03-13', '澎湖縣', '2024-07-08 09:52:02'),
-(999, '謝冠宇', 'mail62297@test.com', '0918147245', '1999-01-26', '金門縣', '2024-07-08 09:52:02'),
-(1002, 'Shinder Lin', 'shinder.lin@gmail.com', '0918981520', NULL, '景', '0000-00-00 00:00:00');
+(999, '謝冠宇', 'mail62297@test.com', '0918147245', '1999-01-26', '台中市', '2024-07-08 09:52:02');
 
 -- --------------------------------------------------------
 
@@ -1031,7 +1028,7 @@ CREATE TABLE `categories` (
   `category_id` int(11) NOT NULL,
   `name` varchar(30) NOT NULL,
   `parent_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- 傾印資料表的資料 `categories`
@@ -1061,7 +1058,7 @@ CREATE TABLE `members` (
   `mobile` varchar(30) DEFAULT NULL,
   `nickname` varchar(30) NOT NULL,
   `create_at` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- 傾印資料表的資料 `members`
@@ -1083,7 +1080,7 @@ CREATE TABLE `orders` (
   `member_id` int(11) NOT NULL,
   `amount` int(11) NOT NULL,
   `ordered_at` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- 傾印資料表的資料 `orders`
@@ -1106,7 +1103,7 @@ CREATE TABLE `order_details` (
   `product_id` int(11) NOT NULL,
   `price` int(11) NOT NULL,
   `quantity` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- 傾印資料表的資料 `order_details`
@@ -1137,7 +1134,7 @@ CREATE TABLE `products` (
   `pages` int(11) NOT NULL,
   `price` int(11) NOT NULL,
   `isbn` varchar(30) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- 傾印資料表的資料 `products`
@@ -1177,8 +1174,8 @@ INSERT INTO `products` (`product_id`, `author`, `book_name`, `category_id`, `pub
 CREATE TABLE `sessions` (
   `session_id` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `expires` int(11) UNSIGNED NOT NULL,
-  `data` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `data` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- 已傾印資料表的索引
@@ -1243,83 +1240,83 @@ ALTER TABLE `sessions`
   ADD PRIMARY KEY (`session_id`);
 
 --
--- 在傾印的資料表使用自動增長(AUTO_INCREMENT)
+-- 在傾印的資料表使用自動遞增(AUTO_INCREMENT)
 --
 
 --
--- 使用資料表自動增長(AUTO_INCREMENT) `ab_likes`
+-- 使用資料表自動遞增(AUTO_INCREMENT) `ab_likes`
 --
 ALTER TABLE `ab_likes`
-  MODIFY `like_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `like_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
--- 使用資料表自動增長(AUTO_INCREMENT) `address_book`
+-- 使用資料表自動遞增(AUTO_INCREMENT) `address_book`
 --
 ALTER TABLE `address_book`
-  MODIFY `ab_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1003;
+  MODIFY `ab_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1004;
 
 --
--- 使用資料表自動增長(AUTO_INCREMENT) `categories`
+-- 使用資料表自動遞增(AUTO_INCREMENT) `categories`
 --
 ALTER TABLE `categories`
   MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- 使用資料表自動增長(AUTO_INCREMENT) `members`
+-- 使用資料表自動遞增(AUTO_INCREMENT) `members`
 --
 ALTER TABLE `members`
   MODIFY `member_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- 使用資料表自動增長(AUTO_INCREMENT) `orders`
+-- 使用資料表自動遞增(AUTO_INCREMENT) `orders`
 --
 ALTER TABLE `orders`
   MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
--- 使用資料表自動增長(AUTO_INCREMENT) `order_details`
+-- 使用資料表自動遞增(AUTO_INCREMENT) `order_details`
 --
 ALTER TABLE `order_details`
   MODIFY `od_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
--- 使用資料表自動增長(AUTO_INCREMENT) `products`
+-- 使用資料表自動遞增(AUTO_INCREMENT) `products`
 --
 ALTER TABLE `products`
   MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
--- 已傾印資料表的限制(constraint)
+-- 已傾印資料表的限制式
 --
 
 --
--- 資料表的限制(constraint) `ab_likes`
+-- 資料表的限制式 `ab_likes`
 --
 ALTER TABLE `ab_likes`
-  ADD CONSTRAINT `ab_likes_ibfk_1` FOREIGN KEY (`member_id`) REFERENCES `members` (`member_id`),
-  ADD CONSTRAINT `ab_likes_ibfk_2` FOREIGN KEY (`ab_id`) REFERENCES `address_book` (`ab_id`);
+  ADD CONSTRAINT `ab_likes_ibfk_1` FOREIGN KEY (`member_id`) REFERENCES `members` (`member_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `ab_likes_ibfk_2` FOREIGN KEY (`ab_id`) REFERENCES `address_book` (`ab_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- 資料表的限制(constraint) `categories`
+-- 資料表的限制式 `categories`
 --
 ALTER TABLE `categories`
   ADD CONSTRAINT `categories_ibfk_1` FOREIGN KEY (`parent_id`) REFERENCES `categories` (`category_id`);
 
 --
--- 資料表的限制(constraint) `orders`
+-- 資料表的限制式 `orders`
 --
 ALTER TABLE `orders`
   ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`member_id`) REFERENCES `members` (`member_id`);
 
 --
--- 資料表的限制(constraint) `order_details`
+-- 資料表的限制式 `order_details`
 --
 ALTER TABLE `order_details`
   ADD CONSTRAINT `order_details_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`),
   ADD CONSTRAINT `order_details_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`);
 
 --
--- 資料表的限制(constraint) `products`
+-- 資料表的限制式 `products`
 --
 ALTER TABLE `products`
   ADD CONSTRAINT `products_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `categories` (`category_id`);
