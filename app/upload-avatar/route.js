@@ -1,7 +1,6 @@
 // ****** Node 20.12 可以正常運作
 // ****** Node 22.12, 20.18 會出錯
-
-import { responseJson } from "@/utils/my-responses";
+import { NextResponse } from "next/server";
 import fs from "node:fs/promises";
 import { imgTypesMapping } from "@/utils/my-schemas";
 import { v4 } from "uuid";
@@ -20,16 +19,16 @@ export async function POST(req) {
   const f = formData.getAll("avatar")[0];
 
   if (!f || !(f instanceof File)) {
-    return responseJson(output);
+    return NextResponse.json(output);
   }
   // console.log(`File name: ${f.name}`);
   // console.log(`Content-Length: ${f.size}`);
 
   const ext = imgTypesMapping[f.type];
-  // return responseJson({...output, ext});
+  // return NextResponse.json({...output, ext});
   if (!ext) {
     output.message = "Invalid file type";
-    return responseJson(output);
+    return NextResponse.json(output);
   }
   const newFileName = `${v4()}${ext}`;
   const fileArrayBuffer = await f.arrayBuffer();
@@ -44,5 +43,5 @@ export async function POST(req) {
   } catch (ex) {
     output.message = ex.message;
   }
-  return responseJson(output);
+  return NextResponse.json(output);
 }

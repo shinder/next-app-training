@@ -1,7 +1,7 @@
+import { NextResponse } from "next/server";
 import moment from "moment";
 import db from "@/utils/connect-mysql";
 import { getQueryStringObject, getBody, getJwtData } from "@/utils/my-parsers";
-import { responseJson } from "@/utils/my-responses";
 import { fmDate, mySchema } from "@/utils/my-schemas";
 
 /* ******* 取得列表資料的函式 ******* */
@@ -75,7 +75,7 @@ export const GET = async (request, { params }) => {
   // console.log(request);
   const obj = await getListData(request);
   const success = !obj.redirect;
-  return responseJson({ ...obj, success });
+  return NextResponse.json({ ...obj, success });
 };
 
 export const POST = async (request, { params }) => {
@@ -110,5 +110,5 @@ export const POST = async (request, { params }) => {
   } catch (ex) {
     output.ex = ex;
   }
-  return responseJson(output);
+  return NextResponse.json(output);
 };

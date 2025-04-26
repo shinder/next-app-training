@@ -3,7 +3,7 @@ import ABList from "./list";
 import { Suspense } from "react";
 
 export async function generateMetadata({ params, searchParams }) {
-  const page = searchParams.page || 1;
+  const page = (await searchParams).page || 1;
   return {
     title: `第 ${page} 頁通訊錄 - 小新的網站`,
   };

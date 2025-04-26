@@ -1,8 +1,8 @@
+import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import db from "@/utils/connect-mysql";
 import { getBody } from "@/utils/my-parsers";
-import { responseJson } from "@/utils/my-responses";
 
 export async function POST(request, { params }) {
   const body = await getBody(request);
@@ -21,7 +21,7 @@ export async function POST(request, { params }) {
   // 0. 兩者, 若有一個沒有值就結束
   if (!email || !password) {
     output.error = "欄位資料不足";
-    return responseJson(output);
+    return NextResponse.json(output);
   }
 
   // 1. 先確定帳號是不是對的
@@ -31,7 +31,7 @@ export async function POST(request, { params }) {
     // 帳號是錯的
     output.code = 400;
     output.error = "帳號或密碼錯誤";
-    return responseJson(output);
+    return NextResponse.json(output);
   }
   const row = rows[0];
   // 2. 確定密碼是不是對的
@@ -41,7 +41,7 @@ export async function POST(request, { params }) {
     // 密碼是錯的
     output.code = 450;
     output.error = "帳號或密碼錯誤";
-    return responseJson(output);
+    return NextResponse.json(output);
   }
 
   // 帳號密碼都是對的，打包 JWT
@@ -58,5 +58,5 @@ export async function POST(request, { params }) {
   };
 
   output.success = true;
-  return responseJson(output);
+  return NextResponse.json(output);
 }
