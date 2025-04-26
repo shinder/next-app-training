@@ -10,8 +10,13 @@ export default function Cleanup() {
 
   return (
     <div>
-      <div>
-        <button onClick={() => setShowChild(!showChild)}>show or hide</button>
+      <div className="mt-3">
+        <button
+          className={`btn btn-${showChild ? "warning" : "success"}`}
+          onClick={() => setShowChild(!showChild)}
+        >
+          {showChild ? "點擊「隱藏」" : "點擊「顯示」"}
+        </button>
       </div>
       {showChild && <CleanupChild1 />}
       <hr />

@@ -1,3 +1,4 @@
+import Navbar from "@/components/layouts/navbar";
 import { AuthContextProvider } from "@/contexts/auth-context";
 export const metadata = {
   title: "Create Next App",
@@ -15,7 +16,8 @@ export default function RootLayout({ children }) {
           />
         </head>
         <body>
-          {children}
+          <Navbar />
+          <div className="container">{children}</div>
           <script
             src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
             defer

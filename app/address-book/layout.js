@@ -1,4 +1,3 @@
-import Navbar from "@/components/layouts/navbar";
 
 export const metadata = {
   title: "通訊錄 - 小新的網站",
@@ -8,8 +7,8 @@ export const metadata = {
 export default function ABLayout({ children}) {
   return (
     <>
-      <Navbar />
-      <div className="container">{children}</div>
+      <div style={{width:'100%', height:'10px', backgroundColor: 'lightcyan'}}></div>
+      {children}
     </>
   );
 }

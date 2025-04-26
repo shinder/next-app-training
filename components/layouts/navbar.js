@@ -13,6 +13,7 @@ export default function Navbar() {
   const pathname = usePathname();
 
   const leftItems = [
+    { title: "Clean-up", href: "/cleanup" },
     { title: "通訊錄列表", href: "/address-book" },
     { title: "新增通訊錄", href: "/address-book/add" },
   ];
