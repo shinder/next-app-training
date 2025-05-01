@@ -26,7 +26,7 @@ const getListData = async (req) => {
   const keyword = query.keyword || "";
   if (keyword) {
     const keyword_ = db.escape(`%${keyword}%`); // SQL 的跳脫, 同時會用單引號包起來
-    where += ` AND ( ab.\`name\` LIKE ${keyword_} OR ab.mobile LIKE ${keyword_} ) `;
+    where += ` AND ( ab.name LIKE ${keyword_} OR ab.mobile LIKE ${keyword_} ) `;
   }
 
   // 生日的篩選

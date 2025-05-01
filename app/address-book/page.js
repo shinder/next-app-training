@@ -1,5 +1,6 @@
 // app/address-book/page.js
 import ABList from "./list";
+import ABListSWR from "./list-swr";
 import { Suspense } from "react";
 
 export async function generateMetadata({ params, searchParams }) {

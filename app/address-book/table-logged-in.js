@@ -14,6 +14,7 @@ export default function ABTableLoggedIn({
   rows = [],
   deleteItem = (ab_id) => {},
   toggleLike = (ab_id) => {},
+  keyword = "",
 }) {
   return (
     <table className="table table-bordered table-striped">
@@ -52,9 +53,23 @@ export default function ABTableLoggedIn({
                 </a>
               </td>
               <td>{v.ab_id}</td>
-              <td>{v.name}</td>
+
+              <td
+                dangerouslySetInnerHTML={{
+                  __html: v.name
+                    .split(keyword)
+                    .join(`<b style="color:red">${keyword}</b>`),
+                }}
+              ></td>
+
               <td>{v.email}</td>
-              <td>{v.mobile}</td>
+              <td
+                dangerouslySetInnerHTML={{
+                  __html: v.mobile
+                    .split(keyword)
+                    .join(`<b style="color:red">${keyword}</b>`),
+                }}
+              ></td>
               <td>{v.birthday2}</td>
               <td>{v.address}</td>
               <td>
