@@ -1,8 +1,9 @@
 "use client";
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import { AB_ADD_POST } from "@/config/api-path";
 import { useRouter } from "next/navigation";
 import styles from "@/app/address-book/address-book.module.css";
+import { useAuth } from "@/contexts/auth-context";
 
 const noErrors = {
   name: "",
@@ -11,6 +12,7 @@ const noErrors = {
 };
 
 export default function ABAddPage() {
+  const { auth, authInitialized } = useAuth();
   const router = useRouter();
   const [myForm, setMyForm] = useState({
     name: "",
@@ -57,6 +59,14 @@ export default function ABAddPage() {
         }
       });
   };
+
+  useEffect(() => {
+    if (authInitialized && !auth.id) {
+      // 如果沒有登入, 不能拜訪這個頁面
+      router.push(`/address-book/quick-login?back=/address-book/add`);
+    }
+  }, [auth, authInitialized, router]);
+
   return (
     <>
       <div className="row">
@@ -66,7 +76,9 @@ export default function ABAddPage() {
               <h5 className="card-title">新增通訊錄</h5>
               <form name="form1" onSubmit={onSubmit} noValidate>
                 <div
-                  className={`mb-3 ${myFormErrors.name ? styles.errorFieldGroup :''}`}
+                  className={`mb-3 ${
+                    myFormErrors.name ? styles.errorFieldGroup : ""
+                  }`}
                 >
                   <label htmlFor="name" className="form-label">
                     姓名
@@ -82,7 +94,9 @@ export default function ABAddPage() {
                   <div className="form-text">{myFormErrors.name}</div>
                 </div>
                 <div
-                  className={`mb-3 ${myFormErrors.email ? styles.errorFieldGroup :''}`}
+                  className={`mb-3 ${
+                    myFormErrors.email ? styles.errorFieldGroup : ""
+                  }`}
                 >
                   <label htmlFor="email" className="form-label">
                     email
@@ -112,7 +126,9 @@ export default function ABAddPage() {
                   <div className="form-text"></div>
                 </div>
                 <div
-                  className={`mb-3 ${myFormErrors.birthday ? styles.errorFieldGroup :''}`}
+                  className={`mb-3 ${
+                    myFormErrors.birthday ? styles.errorFieldGroup : ""
+                  }`}
                 >
                   <label htmlFor="birthday" className="form-label">
                     birthday
