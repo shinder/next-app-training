@@ -92,9 +92,15 @@ export default function ABList() {
                 .map((v, i) => {
                   let p = listData.page - 5 + i;
                   if (p < 1 || p > listData.totalPages) return null;
-                  const addActive = listData.page == p ? "active" : "";
+                  if (listData.page == p) {
+                    return (
+                      <li className="page-item active" key={p}>
+                        <span className="page-link">{p}</span>
+                      </li>
+                    );
+                  }
                   return (
-                    <li className={`page-item ${addActive}`} key={p}>
+                    <li className="page-item" key={p}>
                       <Link className="page-link" href={`?page=${p}`}>
                         {p}
                       </Link>

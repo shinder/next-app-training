@@ -45,14 +45,23 @@ export default function Navbar() {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               {leftItems.map((item) => {
+                if (pathname === item.href) {
+                  return (
+                    <li className="nav-item" key={item.href}>
+                      <span
+                        className="nav-link"
+                        aria-current="page"
+                        href={item.href}
+                        style={selectedStyle}
+                      >
+                        {item.title}
+                      </span>
+                    </li>
+                  );
+                }
                 return (
                   <li className="nav-item" key={item.href}>
-                    <Link
-                      className="nav-link"
-                      aria-current="page"
-                      href={item.href}
-                      style={pathname === item.href ? selectedStyle : {}}
-                    >
+                    <Link className="nav-link" href={item.href}>
                       {item.title}
                     </Link>
                   </li>
