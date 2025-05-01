@@ -64,7 +64,8 @@ export default function ABTableLoggedIn({
               </td>
               <td>
                 <FavHeart
-                  checked={!!v.like_id }
+                  color="purple"
+                  checked={!!v.like_id}
                   onClick={(e) => {
                     toggleLike(v.ab_id);
                   }}

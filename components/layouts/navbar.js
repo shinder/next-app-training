@@ -1,16 +1,22 @@
 "use client";
 import Link from "next/link";
 import { useAuth } from "@/contexts/auth-context";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 const selectedStyle = {
   color: "white",
   fontWeight: "900",
-  borderRadius: "5px",
+  borderRadius: "6px",
   backgroundColor: "#0070f3",
 };
 export default function Navbar() {
   const { auth, logout } = useAuth();
   const pathname = usePathname();
+  const router = useRouter();
+
+  const gotoLoginPage = (e) => {
+    e.preventDefault();
+    router.push(`/address-book/quick-login?back=${location.href}`);
+  };
 
   const leftItems = [
     { title: "Clean-up", href: "/cleanup" },
@@ -39,16 +45,18 @@ export default function Navbar() {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               {leftItems.map((item) => {
-                return <li className="nav-item" key={item.href}>
-                  <Link
-                    className="nav-link"
-                    aria-current="page"
-                    href={item.href}
-                    style={pathname === item.href ? selectedStyle : {}}
-                  >
-                    {item.title}
-                  </Link>
-                </li>;
+                return (
+                  <li className="nav-item" key={item.href}>
+                    <Link
+                      className="nav-link"
+                      aria-current="page"
+                      href={item.href}
+                      style={pathname === item.href ? selectedStyle : {}}
+                    >
+                      {item.title}
+                    </Link>
+                  </li>
+                );
               })}
             </ul>
 
@@ -74,17 +82,18 @@ export default function Navbar() {
               ) : (
                 <>
                   <li className="nav-item">
-                    <Link
+                    <a
                       className="nav-link"
                       style={
                         pathname === "/address-book/quick-login"
                           ? selectedStyle
                           : {}
                       }
-                      href="/address-book/quick-login"
+                      href="#"
+                      onClick={gotoLoginPage}
                     >
                       快速登入
-                    </Link>
+                    </a>
                   </li>
                   <li className="nav-item">
                     <Link className="nav-link" href="#">
