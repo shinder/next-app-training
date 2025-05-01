@@ -29,7 +29,6 @@ export default function ABList() {
   });
 
   const deleteItem = async (ab_id) => {
-    console.log({ ab_id });
     try {
       const r = await fetch(`${AB_DEL_DELETE}/${ab_id}`, {
         method: "DELETE",
@@ -69,7 +68,6 @@ export default function ABList() {
     })
       .then((r) => r.json())
       .then((obj) => {
-        console.log("obj: ", obj);
         // api 回應的資料中，success 為 true 時，才更新 state
         if (obj.success) {
           setListData(obj);

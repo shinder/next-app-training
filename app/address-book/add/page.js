@@ -99,7 +99,7 @@ export default function ABAddPage() {
                   }`}
                 >
                   <label htmlFor="email" className="form-label">
-                    email
+                    電郵
                   </label>
                   <input
                     type="text"
@@ -113,7 +113,7 @@ export default function ABAddPage() {
                 </div>
                 <div className="mb-3">
                   <label htmlFor="mobile" className="form-label">
-                    mobile
+                    手機
                   </label>
                   <input
                     type="text"
@@ -123,7 +123,6 @@ export default function ABAddPage() {
                     value={myForm.mobile}
                     onChange={onChange}
                   />
-                  <div className="form-text"></div>
                 </div>
                 <div
                   className={`mb-3 ${
@@ -131,7 +130,7 @@ export default function ABAddPage() {
                   }`}
                 >
                   <label htmlFor="birthday" className="form-label">
-                    birthday
+                    生日
                   </label>
                   <input
                     type="date"
@@ -145,7 +144,7 @@ export default function ABAddPage() {
                 </div>
                 <div className="mb-3">
                   <label htmlFor="address" className="form-label">
-                    address
+                    地址
                   </label>
                   <textarea
                     className="form-control"
@@ -154,7 +153,6 @@ export default function ABAddPage() {
                     value={myForm.address}
                     onChange={onChange}
                   ></textarea>
-                  <div className="form-text"></div>
                 </div>
 
                 <button type="submit" className="btn btn-primary">

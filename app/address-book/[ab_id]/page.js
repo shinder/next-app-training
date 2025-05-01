@@ -1,4 +1,4 @@
-import ABEdit from "./ab-edit";
+import ABEdit from "./edit";
 import db from "@/utils/connect-mysql";
 
 // 這個和元件是分開來的，資料無法共享
