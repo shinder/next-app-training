@@ -11,6 +11,8 @@ import {
   FaRegHeart,
 } from "react-icons/fa6";
 import { useAuth } from "@/contexts/auth-context";
+import ABTableLoggedIn from "./table-logged-in";
+import ABTableNoLoggedIn from "./table-no-logged-in";
 
 export default function ABList() {
   const [refresh, setRefresh] = useState(false); // 為了刪除項目時觸發 re-render
@@ -26,7 +28,7 @@ export default function ABList() {
     rows: [],
   });
 
-  const delItem = async (ab_id) => {
+  const deleteItem = async (ab_id) => {
     console.log({ ab_id });
     try {
       const r = await fetch(`${AB_DEL_DELETE}/${ab_id}`, {
@@ -48,12 +50,11 @@ export default function ABList() {
     if (result.success) {
       const newListData = { ...listData };
       newListData.rows = listData.rows.map((item) => {
+        let like_id = item.like_id;
         if (item.ab_id === ab_id) {
-          const like_id = result.action === "add" ? result.like_id : null;
-          return { ...item, like_id };
-        } else {
-          return { ...item };
+          like_id = result.action === "add";
         }
+        return { ...item, like_id };
       });
       setListData(newListData);
     }
@@ -76,10 +77,11 @@ export default function ABList() {
           router.push(obj.redirect);
         }
       })
-      .catch(console.warn); // 用戶取消時會發生 exception
-    return () => controller.abort(); // 取消未完成的 ajax
+      .catch(console.warn); // 用戶取消時會發生 Exception
+    return () => controller.abort(); // 取消未完成的 AJAX 請求
   }, [searchParams, refresh, getAuthHeader, router]);
-  console.log("ABList:", listData); // render 時就會執行
+
+  // console.log("ABList:", listData); // render 時就會執行
 
   return (
     <>
@@ -107,68 +109,15 @@ export default function ABList() {
       </div>
       <div className="row">
         <div className="col">
-          <table className="table table-bordered table-striped">
-            <thead>
-              <tr>
-                <th>
-                  <FaRegTrashCan />
-                </th>
-                <th>#</th>
-                <th>姓名</th>
-                <th>電郵</th>
-                <th>手機</th>
-                <th>生日</th>
-                <th>地址</th>
-                <th>
-                  <FaRegPenToSquare />
-                </th>
-                <th>
-                  <FaRegHeart />
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {listData.rows?.map((v, i) => {
-                return (
-                  <tr key={i}>
-                    <td>
-                      <a
-                        href="#"
-                        onClick={(e) => {
-                          e.preventDefault(); // 避免刷新頁面
-                          delItem(v.ab_id); // 呼叫刪除項目的函式
-                        }}
-                      >
-                        <FaRegTrashCan />
-                      </a>
-                    </td>
-                    <td>{v.ab_id}</td>
-                    <td>{v.name}</td>
-                    <td>{v.email}</td>
-                    <td>{v.mobile}</td>
-                    <td>{v.birthday2}</td>
-                    <td>{v.address}</td>
-                    <td>
-                      <Link href={"/address-book/" + v.ab_id}>
-                        <FaRegPenToSquare />
-                      </Link>
-                    </td>
-                    <td>
-                      <a
-                        href="#"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          toggleLike(v.ab_id);
-                        }}
-                      >
-                        {v.like_id ? <FaHeart /> : <FaRegHeart />}
-                      </a>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+          {auth.id ? (
+            <ABTableLoggedIn
+              rows={listData.rows}
+              deleteItem={deleteItem}
+              toggleLike={toggleLike}
+            />
+          ) : (
+            <ABTableNoLoggedIn rows={listData.rows} />
+          )}
         </div>
       </div>
     </>

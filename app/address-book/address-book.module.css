@@ -4,5 +4,10 @@
   }
   div {
     color: red;
+    font-weight: 900;
   }
+}
+
+.hearts {
+  cursor: pointer;
 }

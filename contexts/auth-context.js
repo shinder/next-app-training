@@ -9,6 +9,7 @@ const AuthContext = createContext();
 2. 登出
 3. 取得登入者的資料
 4. 取得已登入者的 token (或直接拿到 Authorization headers)
+5. 是否已從 localStorage 取得登入狀態資料 (authInitialized)
 */
 // 預設的狀態, 沒有登入
 const emptyAuth = {
@@ -20,6 +21,7 @@ const emptyAuth = {
 const storageKey = "shinder-auth";
 
 export function AuthContextProvider({ children }) {
+  const [authInitialized, setAuthInitialized] = useState(false);
   const [auth, setAuth] = useState({ ...emptyAuth });
 
   // 登出的功能
@@ -51,9 +53,8 @@ export function AuthContextProvider({ children }) {
   const getAuthHeader = () => {
     if (auth.token) {
       return { Authorization: "Bearer " + auth.token };
-    } else {
-      return {};
     }
+    return {};
   };
 
   useEffect(() => {
@@ -64,10 +65,13 @@ export function AuthContextProvider({ children }) {
         setAuth(data);
       }
     } catch (ex) {}
+    setAuthInitialized(true);
   }, []);
 
   return (
-    <AuthContext.Provider value={{ auth, logout, login, getAuthHeader }}>
+    <AuthContext.Provider
+      value={{ auth, logout, login, getAuthHeader, authInitialized }}
+    >
       {children}
     </AuthContext.Provider>
   );

@@ -10,8 +10,7 @@ export async function generateMetadata({ params, searchParams }) {
 }
 
 export default function ABListPage() {
-  console.log("ABListPage");
-  
+  // console.log("ABListPage");
   return (
     <Suspense fallback={<div>loading</div>}>
       <ABList />
