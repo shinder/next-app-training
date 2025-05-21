@@ -19,7 +19,7 @@ export default function Navbar() {
   };
 
   const leftItems = [
-    { title: "Clean-up", href: "/cleanup" },
+    { title: "Cleanup", href: "/cleanup" },
     { title: "通訊錄列表", href: "/address-book" },
     { title: "新增通訊錄", href: "/address-book/add" },
   ];

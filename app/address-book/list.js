@@ -79,7 +79,11 @@ export default function ABList() {
       <div className="row">
         <div className="col-6"></div>
         <div className="col-6">
-          <form className="d-flex" role="search">
+          <form className="d-flex" role="search" onSubmit={(e) => {
+            e.preventDefault();
+            const qs = new URLSearchParams(new FormData(e.target)).toString();
+            router.push(`/address-book?${qs}`);
+            }}>
             <input
               className="form-control me-2"
               type="search"
