@@ -1,4 +1,6 @@
 "use client";
+import { useSession, signIn, signOut } from "next-auth/react";
+
 import Link from "next/link";
 import { useAuth } from "@/contexts/auth-context";
 import { usePathname, useRouter } from "next/navigation";
@@ -12,6 +14,7 @@ export default function Navbar() {
   const { auth, logout } = useAuth();
   const pathname = usePathname();
   const router = useRouter();
+  const session = useSession();
 
   const gotoLoginPage = (e) => {
     e.preventDefault();
@@ -70,6 +73,44 @@ export default function Navbar() {
             </ul>
 
             <ul className="navbar-nav  mb-2 mb-lg-0">
+              {session.status === "loading" ? (
+                <li className="nav-item">
+                  <span className="nav-link">Loading...</span>
+                </li>
+              ) : session.status === "unauthenticated" ? (
+                <li className="nav-item">
+                  <a
+                    className="nav-link"
+                    href="#"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      signIn("google");
+                    }}
+                  >
+                    Google登入
+                  </a>
+                </li>
+              ) : (
+                <>
+                  <li className="nav-item">
+                    {console.log(session)}
+                    <a className="nav-link">{session?.data?.user?.email}</a>
+                  </li>
+                  <li className="nav-item">
+                    <a
+                      className="nav-link"
+                      href="#"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        signOut();
+                      }}
+                    >
+                      Google登出
+                    </a>
+                  </li>
+                </>
+              )}
+
               {auth.id ? (
                 <>
                   <li className="nav-item">
