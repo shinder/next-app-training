@@ -4,12 +4,13 @@ import { useState } from "react";
 import CleanupChild1 from "@/components/cleanup-child1";
 import CleanupChild2 from "@/components/cleanup-child2";
 import CleanupChild3 from "@/components/cleanup-child3";
+import MyAnimatePresence from "@/components/layouts/my-animate-presence";
 
 export default function Cleanup() {
   const [showChild, setShowChild] = useState(false);
 
   return (
-    <div>
+    <MyAnimatePresence>
       <div className="mt-3">
         <button
           className={`btn btn-${showChild ? "warning" : "success"}`}
@@ -23,6 +24,6 @@ export default function Cleanup() {
       {/* {showChild && <CleanupChild2 />} */}
       <hr />
       {/* {showChild && <CleanupChild3 />} */}
-    </div>
+    </MyAnimatePresence>
   );
 }

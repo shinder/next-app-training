@@ -25,6 +25,7 @@ export default function Navbar() {
     { title: "Cleanup", href: "/cleanup" },
     { title: "通訊錄列表", href: "/address-book" },
     { title: "新增通訊錄", href: "/address-book/add" },
+    { title: "動畫測試", href: "/my-motion" },
   ];
 
   return (

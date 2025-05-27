@@ -6,6 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/contexts/auth-context";
 import ABTableLoggedIn from "./table-logged-in";
 import ABTableNoLoggedIn from "./table-no-logged-in";
+import MyAnimatePresence from "@/components/layouts/my-animate-presence";
 
 export default function ABList() {
   const [refresh, setRefresh] = useState(false); // 為了刪除項目時觸發 re-render
@@ -75,7 +76,7 @@ export default function ABList() {
   // console.log("ABList:", listData); // render 時就會執行
 
   return (
-    <>
+    <MyAnimatePresence>
       <div className="row">
         <div className="col-6"></div>
         <div className="col-6">
@@ -156,6 +157,6 @@ export default function ABList() {
           </div>
         </>
       )}
-    </>
+    </MyAnimatePresence>
   );
 }

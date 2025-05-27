@@ -4,6 +4,7 @@ import { AB_ADD_POST } from "@/config/api-path";
 import { useRouter } from "next/navigation";
 import styles from "@/app/address-book/address-book.module.css";
 import { useAuth } from "@/contexts/auth-context";
+import MyAnimatePresence2 from "@/components/layouts/my-animate-presence2";
 
 const noErrors = {
   name: "",
@@ -68,7 +69,7 @@ export default function ABAddPage() {
   }, [auth, authInitialized, router]);
 
   return (
-    <>
+    <MyAnimatePresence2>
       <div className="row">
         <div className="col-6">
           <div className="card">
@@ -163,6 +164,6 @@ export default function ABAddPage() {
           </div>
         </div>
       </div>
-    </>
+    </MyAnimatePresence2>
   );
 }
